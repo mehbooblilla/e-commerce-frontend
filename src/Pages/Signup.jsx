@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const {
     register,
@@ -8,7 +9,21 @@ const Signup = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = data => console.log(data);
+const [loading,setloading]=useState(false)
+
+  const onSubmit = data =>{
+    setloading(true)
+    axios.post('http://localhost:5000/register',data).then(response=>{
+      console.log(response,'signup response');
+      localStorage.setItem('user',JSON.stringify(response.data))
+      setTimeout(() => {
+       window.location.reload()
+      }, 2000);
+      
+      setloading(false)
+    })
+    
+  };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -18,12 +33,12 @@ const Signup = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="gap-2 flex flex-col w-full">
             <div className="gap-2 flex flex-col">
             <label htmlFor="" className="text-lg font-semibold">Full Name</label>
-            <input  {...register("name",{ required: true })} className="flex border border-gray-400 p-2 outline-none rounded-md"/>
+            <input  {...register("name",{ required: true })} name="name" type="text" className="flex border border-gray-400 p-2 outline-none rounded-md"/>
             {errors.name && <span className="text-red-800 ">Name is required</span>}
             </div>
             <div className="gap-2 flex flex-col">
             <label htmlFor="" className="text-lg font-semibold">Email</label>
-            <input  {...register("email",{ required: true })} type="email" className="flex border border-gray-400 p-2 outline-none rounded-md"/>
+            <input  {...register("email",{ required: true })}  name="email" type="email" className="flex border border-gray-400 p-2 outline-none rounded-md"/>
             {errors.email && <span className="text-red-800">Email is required</span>}
             </div>
             <div className="gap-2 flex flex-col">
@@ -34,7 +49,7 @@ const Signup = () => {
 
          
 
-            <input type="submit" className="bg-sky-500 p-2 rounded-md text-lg font-semibold mt-4" />
+            <button type="submit" disabled={loading} className={`${loading ? "bg-gray-400":'bg-sky-500'} p-2 rounded-md text-lg font-semibold mt-4`} >Submit</button>
           </form>
         </div>
       </div>

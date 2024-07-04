@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
@@ -8,7 +9,20 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = data => console.log(data);
+  const [loading,setloading]=useState(false)
+  const onSubmit = data =>{
+    setloading(true)
+    axios.post('http://localhost:5000/login',data).then(response=>{
+      console.log(response,'login response');
+      localStorage.setItem('user',JSON.stringify(response.data.data))
+      setTimeout(() => {
+       window.location.reload()
+      }, 2000);
+      
+      setloading(false)
+    })
+    
+  };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -30,7 +44,7 @@ const Login = () => {
 
          
 
-            <input type="submit" className="bg-sky-500 p-2 rounded-md text-lg font-semibold mt-4" />
+            <input type="submit" className="bg-sky-500 p-2 rounded-md text-lg font-semibold mt-8 cursor-pointer" />
           </form>
         </div>
       </div>
