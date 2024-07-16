@@ -14,10 +14,14 @@ const Login = () => {
     setloading(true)
     axios.post('http://localhost:5000/login',data).then(response=>{
       console.log(response,'login response');
-      localStorage.setItem('user',JSON.stringify(response.data.data))
-      setTimeout(() => {
-       window.location.reload()
-      }, 2000);
+      if(response.data.success){
+        localStorage.setItem('user',JSON.stringify(response.data.data))
+        setTimeout(() => {
+          window.location.reload()
+         }, 2000);
+      }
+      
+    
       
       setloading(false)
     })

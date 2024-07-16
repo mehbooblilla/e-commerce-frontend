@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 const Layout = () => {
   
   return (
-    <div className='flex w-full h-[100vh]'>
+    <div className='flex w-full '>
         {/* <div className='w-1/5'>
         <Sidebar/>
         </div>
