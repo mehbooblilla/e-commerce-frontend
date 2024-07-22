@@ -1,8 +1,6 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {Route, Routes, Navigate } from 'react-router-dom';
 import Layout from '../Layout';
-import Login from '../../Pages/Login';
-import Signup from '../../Pages/Signup';
 import Products from '../../Pages/Products';
 const PrivateRoute = () => {
   return (
