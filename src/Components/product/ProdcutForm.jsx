@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import axiosInstance from '../Axios/Axios';
 const ProdcutForm = ({handleCancel,product,getAllProducts}) => {
 
     const {
@@ -34,7 +35,7 @@ const ProdcutForm = ({handleCancel,product,getAllProducts}) => {
             userId: user?._id
         }
         if(product){
-          axios.put(`http://localhost:5000/update/${product?._id}`,payload).then(response=>{
+          axiosInstance.put(`http://localhost:5000/update/${product?._id}`,payload).then(response=>{
             console.log(response,'add product response');
             reset()
             handleCancel()
@@ -42,7 +43,7 @@ const ProdcutForm = ({handleCancel,product,getAllProducts}) => {
             getAllProducts()
           })
         }else{
-          axios.post('http://localhost:5000/add-product',payload).then(response=>{
+          axiosInstance.post('http://localhost:5000/add-product',payload).then(response=>{
             console.log(response,'add product response');
             reset()
             handleCancel()

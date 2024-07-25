@@ -5,6 +5,7 @@ import axios from "axios";
 import { MdOutlineDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import toast from "react-hot-toast";
+import axiosInstance from "../Components/Axios/Axios";
 
 const Products = () => {
   const deleteId=useRef(null)
@@ -29,7 +30,7 @@ const Products = () => {
    
   };
   const handleDeleteProduct = () => {
-    axios.delete(`http://localhost:5000/product/${deleteId.current}`).then(response=>{
+    axiosInstance.delete(`http://localhost:5000/product/${deleteId.current}`).then(response=>{
       console.log(response,'delete product response');
       if (response.data?.deletedCount==1) {
         setDeleteModalStatus(false);
@@ -48,7 +49,7 @@ const Products = () => {
 
   };
   const getAllProducts=()=>{
-    axios.get("http://localhost:5000/products").then((response) => {
+    axiosInstance.get("http://localhost:5000/products").then((response) => {
       // console.log(response,'add product response');
       if (response?.data) {
         setProductList(response?.data);
@@ -101,7 +102,7 @@ const Products = () => {
     },
   ];
   return (
-    <div className="py-10 px-20 ">
+    <div className="py-10 px-20 w-full h-full">
       <header className="flex p-4 bg-white mb-10 rounded-lg">
         <div className="flex justify-between w-full">
           <h1 className="text-lg font-bold">Product List</h1>

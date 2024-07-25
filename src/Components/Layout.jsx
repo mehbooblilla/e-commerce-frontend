@@ -14,7 +14,7 @@ const Layout = () => {
         <header className=''>
             <Navbar/>
         </header>
-       <main className='bg-gray-200 h-full min-h-[calc(100vh-60px)]'>
+       <main className='bg-gray-200 h-full min-h-[calc(100vh-60px)] flex items-center'>
        <Outlet />
        </main>
 

@@ -1,6 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
 
 const Login = () => {
   const {
@@ -9,19 +12,24 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [loading,setloading]=useState(false)
+  const { user, setUser } = useContext(AuthContext);
+  const navigete=useNavigate()
   const onSubmit = data =>{
     setloading(true)
     axios.post('http://localhost:5000/login',data).then(response=>{
       console.log(response,'login response');
-      if(response.data.success){
-        localStorage.setItem('user',JSON.stringify(response.data.data))
-        setTimeout(() => {
-          window.location.reload()
-         }, 2000);
+      if(response.data.auth){
+        localStorage.setItem('user',JSON.stringify(response.data.user))
+        localStorage.setItem('token',JSON.stringify(response.data.auth))
+        setUser(response.data.user)
+        // setTimeout(() => {
+        //   window.location.reload()
+        //  }, 2000);
+   
+      }else{
+        toast.error(response.data.message)
       }
-      
-    
-      
+      navigete('/products')
       setloading(false)
     })
     

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "../Layout";
 import Login from "../../Pages/Login";
 import Signup from "../../Pages/Signup";
-import Products from "../../Pages/Products";
 import PrivateRoute from "./PrivateRoute";
+import { AuthContext } from "../../App";
 const MainRoutes = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
+  const { user, setUser } = useContext(AuthContext);
+
+
+console.log(user);
   return (
     <Router>
       {user ? (
